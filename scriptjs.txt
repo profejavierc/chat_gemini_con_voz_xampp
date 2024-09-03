@@ -1,0 +1,67 @@
+let recognition;
+
+function startSpeechRecognition() {
+    if ('webkitSpeechRecognition' in window) {
+        recognition = new webkitSpeechRecognition();
+        recognition.lang = 'es-ES';
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            document.getElementById('userInput').value = transcript;
+            generateResponse();
+        };
+        recognition.start();
+    } else {
+        alert('Tu navegador no soporta reconocimiento de voz.');
+    }
+}
+
+function speak(text) {
+    if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'es-ES';
+        speechSynthesis.speak(utterance);
+    } else {
+        console.log("La síntesis de voz no está soportada en este navegador.");
+    }
+}
+
+function generateResponse() {
+    const userInput = document.getElementById('userInput').value;
+    const responseDiv = document.getElementById('responseDiv');
+    fetch('response.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: userInput })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+    })
+    .then(text => {
+        try {
+            const data = JSON.parse(text);
+            if (data.error) {
+                responseDiv.innerHTML = `Error: ${data.error}`;
+                if (data.raw_response) {
+                    console.log('Respuesta cruda de la API:', data.raw_response);
+                }
+            } else if (data.text) {
+                responseDiv.innerHTML = data.text;
+                speak(data.text);
+            } else {
+                responseDiv.innerHTML = 'Respuesta inesperada del servidor';
+            }
+        } catch (e) {
+            console.error('Error al parsear JSON:', e);
+            responseDiv.innerHTML = `Error al parsear la respuesta del servidor: ${text}`;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        responseDiv.innerHTML = `Error: ${error.message}`;
+    });
+}
