@@ -1,5 +1,15 @@
+ index.php (Frontend)
+ script.js (JavaScript para manejar interacciones)
+response.php (Backend para comunicarse con la API de Gemini)
+--------------------------------------oo------------------------------------------
+Intalla xampp. https://www.apachefriends.org/es/download.html
+Open the folder in the C: xampp and then the hdocs folder
+create a new folder the u you want
+
+Download file https://github.com/profejavierc/chat_gemini_con_voz_xampp/archive/refs/heads/main.zip
+decompress
 convert each file to its extension, php and js..open them and pass them to each extension. (index.php)(response.php) y  (script.js)
- 
+Change your apikey inside the file  [response.php] that you get with your aistudio Google account here:https://aistudio.google.com/app/apikey
 
 With these three files you could create a voice chat with xampp and you can customize it with your Gemini apikey key
 Estas tecnologías están usando algoritmos y técnicas como reconocimiento de voz, entendimiento natural, y respuesta y conversación para interactuar con los usuarios y ayudar a realizar tareas en casa, en el coche o en cualquier lugar.
