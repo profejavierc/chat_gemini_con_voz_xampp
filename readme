@@ -2,7 +2,7 @@
  script.js (JavaScript para manejar interacciones)
 response.php (Backend para comunicarse con la API de Gemini)
 --------------------------------------oo------------------------------------------
-Intalla xampp. https://www.apachefriends.org/es/download.html
+Installa xampp. https://www.apachefriends.org/es/download.html
 Open the folder in the C: xampp and then the hdocs folder
 create a new folder the u you want
 
